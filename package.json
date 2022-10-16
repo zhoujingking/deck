@@ -1,0 +1,23 @@
+{
+  "name": "deck",
+  "version": "1.0.0",
+  "description": "some kind of poker stuff",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhoujingking/deck.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhoujingking/deck/issues"
+  },
+  "homepage": "https://github.com/zhoujingking/deck#readme",
+  "type": "module",
+  "dependencies": {
+    "lodash-es": "^4.17.21"
+  }
+}
