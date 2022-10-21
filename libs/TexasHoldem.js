@@ -2,38 +2,38 @@ import { CardRank } from './Card.js';
 
 // cardList: Array of Card, max seven cards
 export function preProcess(cardList) {
-  // first sort cardList by its rank in ascending order
-  cardList.sort((a, b) => {
-    if (a.rank > b.rank) {
-      return 1;
-    }
-    if (a.rank === b.rank) {
-      return 0;
-    }
-    return -1;
-  });
 
   // something more need to check
   
   // counting
+  const countMap = getCountMap(cardList);
+
+  // check if it has a straight inside
+  // const result = getStraightResult(countMap);
+  // return result;
+}
+
+export function getCountMap(cardList) {
   const countMap = {}; // key: rank, value: list of cards
   cardList.forEach(card => {
     countMap[card.rank] = countMap[card.rank] || [];
     countMap[card.rank].push(card);
   });
-
-  // check if it has a straight inside
-  const result = getStraightResult(countMap);
-  console.table(JSON.stringify(result))
+  return countMap;
 }
 
-export function getStraightResult(countMap) {
+// input cardlist, output possible straight cards. eg [[A2345], [23456]]
+export function getPossibleStraightCards(cardList) {
   const MAX_STRAIGTH_CARD_COUNT = 5;
-  const MAX_CARD_COUNT = 7;
   const possibleStraight = [];
+  const countMap = getCountMap(cardList);
   const ranks = Object.keys(countMap).map(rank => Number(rank)).sort((a, b) => a - b);
+  if (ranks.length < MAX_STRAIGTH_CARD_COUNT) {
+    return [];
+  }
   
-  for (let index = MAX_STRAIGTH_CARD_COUNT; index < MAX_CARD_COUNT; index++) {
+  const numOfCards = cardList.length;
+  for (let index = MAX_STRAIGTH_CARD_COUNT - 1; index < numOfCards; index++) {
     const endIndex = index;
     const startIndex = endIndex - (MAX_STRAIGTH_CARD_COUNT - 1);
     if (ranks[endIndex] - ranks[startIndex] === MAX_STRAIGTH_CARD_COUNT - 1) {
