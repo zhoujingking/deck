@@ -1,5 +1,5 @@
 import Card, { CardRank, CardSuit } from './Card.js';
-import { getStraightResult, preProcess } from './TexasHoldem.js';
+import { getStraightCards } from './utilities.js';
 
 const cardList = [
   new Card(CardSuit.Heart, CardRank.Two),
@@ -10,6 +10,6 @@ const cardList = [
   new Card(CardSuit.Heart, CardRank.Ace),
   new Card(CardSuit.Heart, CardRank.Seven),
 ];
-const result = getStraightResult(cardList);
+const result = getStraightCards(cardList);
 console.log(result)
 

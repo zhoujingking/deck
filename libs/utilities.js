@@ -1,19 +1,6 @@
 import { CardRank } from './Card.js';
 
-// cardList: Array of Card, max seven cards
-export function preProcess(cardList) {
-
-  // something more need to check
-  
-  // counting
-  const countMap = getCountMap(cardList);
-
-  // check if it has a straight inside
-  // const result = getStraightResult(countMap);
-  // return result;
-}
-
-export function getCountMap(cardList) {
+export function getCountMapByRank(cardList) {
   const countMap = {}; // key: rank, value: list of cards
   cardList.forEach(card => {
     countMap[card.rank] = countMap[card.rank] || [];
@@ -22,11 +9,12 @@ export function getCountMap(cardList) {
   return countMap;
 }
 
-// input cardlist, output possible straight cards. eg [[A2345], [23456]]
+// utitlity function, used to test possible straight cards
+// input: cardList, output possible straight cards. eg [[A2345], [23456]] in ascending order
 export function getPossibleStraightCards(cardList) {
   const MAX_STRAIGTH_CARD_COUNT = 5;
   const possibleStraight = [];
-  const countMap = getCountMap(cardList);
+  const countMap = getCountMapByRank(cardList);
   const ranks = Object.keys(countMap).map(rank => Number(rank)).sort((a, b) => a - b);
   if (ranks.length < MAX_STRAIGTH_CARD_COUNT) {
     return [];
@@ -40,10 +28,10 @@ export function getPossibleStraightCards(cardList) {
       possibleStraight.push(ranks.slice(startIndex, endIndex + 1).map(rank => countMap[rank][0])) // pick first one here
     }
   }
-  // handle special case: A2345
+  // handle special case: A2345 - the smallest one, so put it at the beginning
   if (ranks.length >= MAX_STRAIGTH_CARD_COUNT && ranks[ranks.length - 1] === CardRank.Ace) {
     if (ranks[0] === CardRank.Two && ranks[MAX_STRAIGTH_CARD_COUNT - 2] - ranks[0] === MAX_STRAIGTH_CARD_COUNT - 2) {
-      possibleStraight.push([
+      possibleStraight.unshift([
         countMap[CardRank.Ace][0], 
         countMap[CardRank.Two][0],
         countMap[CardRank.Three][0],
@@ -54,4 +42,33 @@ export function getPossibleStraightCards(cardList) {
   }
   return possibleStraight;
 }
+
+// get the highest straight
+export function getStraightCards(cardList) {
+  const possibleStraightArr = getPossibleStraightCards(cardList);
+  if (possibleStraightArr.length) {
+    return possibleStraightArr[possibleStraightArr.length - 1];
+  }
+  return [];
+}
+
+export function getCountMapBySuit(cardList) {
+  const countMap = {};
+  cardList.forEach(card => {
+    countMap[card.suit] = countMap[card.suit] || [];
+    countMap[card.suit].push(card);
+  });
+  return countMap;
+}
+
+// input: cardList, output cards width the same suit (length >= 5)
+export function getPossibleFlushCards(cardList) {
+  const suitCountMap = getCountMapBySuit(cardList);
+  const suit = Object.keys(suitCountMap).find(suit => suitCountMap[suit].length >= 5);
+  if (suit) {
+    return suitCountMap[suit];
+  }
+  return [];
+}
+
 
