@@ -6,6 +6,11 @@ type CountMap = {
   [s: string]: Card[]
 }
 
+type ShapeResult = {
+  shape: Shape,
+  cards: Card[]
+}
+
 export function getCountMapBySuit(cardList: Card[]): CountMap  {
   const countMap = {};
   cardList.forEach(card => {
@@ -29,48 +34,58 @@ export function getCountMapByRank(cardList: Card[]): CountMap {
  * @param cardList 
  * @returns [Shape, Cards[]]
  */
-export function getCardShape(cardList: Card[]): [Shape, Card[]] {
-  /**
-   * 
-   * @param sortedCardList in reverse order
-   * @returns straight cards
-   */
-  // function getStraight(sortedCardList: Card[]): Card[] | null {
-  //   if (sortedCardList.length < 5) {
-  //     return null;
-  //   }
-  //   for (let index = 0; index < sortedCardList.length; ++index) {
-  //     if (sortedCardList[index].rank - sortedCardList[index + HAND_LENTH - 1].rank === HAND_LENTH -1) {
-  //       return sortedCardList.slice(0, HAND_LENTH);
-  //     }
-  //   }
-  //   // special case A2345
-  //   if ()
-  // }
-
-
+export function getCardShape(cardList: Card[]): ShapeResult {
   // check Royal Flush & Straight Flush
   const suitCountMap = getCountMapBySuit(cardList);
-  const target = Object.entries(suitCountMap).find(([suit, cards]) => cards.length >= 5);
+  const flushTarget = Object.entries(suitCountMap).find(([suit, cards]) => cards.length >= 5);
   let possibleShape = Shape.HighCards;
-  if (target) {
+  if (flushTarget) {
     // possible royal flush here
-    const [suit, cards] = target;
+    const [, cards] = flushTarget;
     // sort these cards in reverse order
     const cardsInReverseOrder = cards.sort((a, b) => a.rank > b.rank ? -1 : 0);
     if (cardsInReverseOrder[HAND_LENTH - 1].rank === Rank.Ten) {
-      return [Shape.RoyalFlush, cardsInReverseOrder.slice(0, HAND_LENTH)];
+      return {
+        shape: Shape.RoyalFlush,
+        cards: cardsInReverseOrder.slice(0, HAND_LENTH)
+      };
     }
     // check straigh flush
     for (let index = 0; index < cardsInReverseOrder.length - HAND_LENTH + 1; ++index) {
       if (cardsInReverseOrder[index].rank - cardsInReverseOrder[index + HAND_LENTH - 1].rank === HAND_LENTH -1) {
-        return [Shape.StraightFlush, cardsInReverseOrder.slice(index, index + HAND_LENTH)];
+        return {
+          shape: Shape.StraightFlush,
+          cards: cardsInReverseOrder.slice(index, index + HAND_LENTH)
+        }
       }
     }
     // special case A2345
     if (cardsInReverseOrder[0].rank === Rank.Ace && cardsInReverseOrder[cardsInReverseOrder.length - HAND_LENTH + 1].rank === 5) {
-      return [Shape.StraightFlush, [cardsInReverseOrder[0], ...cardsInReverseOrder.slice(cardsInReverseOrder.length - HAND_LENTH + 1, cardsInReverseOrder.length)]];
+      return {
+        shape: Shape.StraightFlush,
+        cards: [cardsInReverseOrder[0], ...cardsInReverseOrder.slice(cardsInReverseOrder.length - HAND_LENTH + 1, cardsInReverseOrder.length)]
+      }
+    }
+    possibleShape = Shape.Flush;
+  }
+
+  const rankCountMap = getCountMapByRank(cardList);
+  // check quads
+  const quadsTarget = Object.entries(rankCountMap).find(([rank, cards]) => cards.length === 4);
+  if (quadsTarget) {
+    const [, cards] = quadsTarget;
+    const rank = cards[0].rank;
+    const otherCards = cardList.filter(card => card.rank !== rank);
+    const highestRank = Math.max(...otherCards.map(card => card.rank));
+    const card = otherCards.find(c => c.rank === highestRank);
+    return {
+      shape: Shape.Quads,
+      cards: [...cards, card]
     }
   }
-  return [Shape.HighCards, []];
+
+  return {
+    shape: Shape.HighCards,
+    cards: []
+  };
 }

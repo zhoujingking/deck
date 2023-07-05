@@ -45,7 +45,7 @@ test('royal flush', () => {
     new Card(Suit.Club, Rank.King),
     new Card(Suit.Diamond, Rank.Nine),
   ];
-  const [shape] = getCardShape(cardList);
+  const { shape } = getCardShape(cardList);
   expect(shape).toBe(Shape.RoyalFlush);
 })
 
@@ -58,7 +58,7 @@ test('not royal flush', () => {
     new Card(Suit.Club, Rank.King),
     new Card(Suit.Diamond, Rank.Nine),
   ];
-  const [shape] = getCardShape(cardList);
+  const {shape} = getCardShape(cardList);
   expect(shape).not.toBe(Shape.RoyalFlush);
 })
 
@@ -72,7 +72,7 @@ test('straight flush', () => {
     new Card(Suit.Club, Rank.Seven),
     new Card(Suit.Diamond, Rank.Nine),
   ];
-  const [shape, cards] = getCardShape(cardList);
+  const {shape, cards} = getCardShape(cardList);
   expect(shape).toBe(Shape.StraightFlush);
   expect(cards[0].suit).toBe(Suit.Club);
   expect(cards[0].rank).toBe(Rank.Ten);
@@ -92,7 +92,7 @@ test('straight flush A2345', () => {
     new Card(Suit.Club, Rank.Seven),
     new Card(Suit.Diamond, Rank.Nine),
   ];
-  const [shape, cards] = getCardShape(cardList);
+  const {shape, cards} = getCardShape(cardList);
   expect(shape).toBe(Shape.StraightFlush);
   expect(cards[0].suit).toBe(Suit.Club);
   expect(cards[0].rank).toBe(Rank.Ace);
@@ -100,4 +100,23 @@ test('straight flush A2345', () => {
   expect(cards[2].rank).toBe(Rank.Four);
   expect(cards[3].rank).toBe(Rank.Three);
   expect(cards[4].rank).toBe(Rank.Two);
+})
+
+test('quads', () => {
+  const cardList = [
+    new Card(Suit.Club, Rank.Ace),
+    new Card(Suit.Diamond, Rank.Ace),
+    new Card(Suit.Heart, Rank.Ace),
+    new Card(Suit.Spade, Rank.Ace),
+    new Card(Suit.Club, Rank.Two),
+    new Card(Suit.Club, Rank.Seven),
+    new Card(Suit.Diamond, Rank.Nine),
+  ];
+  const {shape, cards} = getCardShape(cardList);
+  expect(shape).toBe(Shape.Quads);
+  expect(cards[0].rank).toBe(Rank.Ace);
+  expect(cards[1].rank).toBe(Rank.Ace);
+  expect(cards[2].rank).toBe(Rank.Ace);
+  expect(cards[3].rank).toBe(Rank.Ace);
+  expect(cards[4].rank).toBe(Rank.Nine);
 })
