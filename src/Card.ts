@@ -55,3 +55,5 @@ export enum Shape {
   StraightFlush,
   RoyalFlush
 }
+
+export const HAND_LENTH = 5;

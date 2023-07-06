@@ -1,12 +1,10 @@
-import { Card, Rank, Shape } from './Card';
-
-const HAND_LENTH = 5;
+import { Card, Rank, Shape, HAND_LENTH } from './Card';
 
 type CountMap = {
   [s: string]: Card[]
 }
 
-type ShapeResult = {
+export type ShapeResult = {
   shape: Shape,
   cards: Card[]
 }
