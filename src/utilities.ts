@@ -139,8 +139,41 @@ export function getCardShape(cardList: Card[]): ShapeResult {
     }
   }
 
+  // three of a kind
+  if (possibleResult?.shape === Shape.ThreeOfAKind) {
+    return possibleResult;
+  }
+
+  // two pairs
+  const pairTargetList = Object.values(rankCountMap).filter(cards => cards.length === 2);
+  if (pairTargetList.length >= 2) {
+    // sort by rank in reverse order
+    const rankList = pairTargetList.map(cards => cards[0].rank).sort((a, b) => b - a).slice(0, 2);
+    const cards = rankList.reduce((acc, curr) => {
+      return [...acc, ...rankCountMap[curr]];
+    }, []);
+
+    const otherHighestCard = cardList.filter(card => !rankList.includes(card.rank)).sort((a, b) => b.rank - a.rank)[0];
+    return {
+      shape: Shape.TwoPairs,
+      cards: [...cards, otherHighestCard]
+    }
+  }
+
+  // one pair
+  if (pairTargetList.length === 1) {
+    const pair = pairTargetList[0];
+    const rank = pair[0].rank;
+    const otherHighestCards = cardList.filter(card => rank !== card.rank).sort((a, b) => b.rank - a.rank).slice(0, 3);
+    return {
+      shape: Shape.OnePair,
+      cards: [...pair, ...otherHighestCards]
+    }
+  }
+
+  // high cards
   return {
     shape: Shape.HighCards,
-    cards: []
+    cards: cardList.sort((a, b) => b.rank - a.rank).slice(0, HAND_LENTH)
   };
 }

@@ -160,6 +160,26 @@ test('full house', () => {
   expect(cards[4].rank).toBe(Rank.King);
 })
 
+test('flush', () => {
+  const cardList = [
+    new Card(Suit.Club, Rank.Ace),
+    new Card(Suit.Diamond, Rank.Ace),
+    new Card(Suit.Diamond, Rank.Queen),
+    new Card(Suit.Diamond, Rank.Ten),
+    new Card(Suit.Diamond, Rank.Nine),
+    new Card(Suit.Diamond, Rank.Eight),
+    new Card(Suit.Diamond, Rank.King),
+  ];
+  const {shape, cards} = getCardShape(cardList);
+  expect(shape).toBe(Shape.Flush);
+  expect(cards[0].suit).toBe(Suit.Diamond);
+  expect(cards[0].rank).toBe(Rank.Ace);
+  expect(cards[1].rank).toBe(Rank.King);
+  expect(cards[2].rank).toBe(Rank.Queen);
+  expect(cards[3].rank).toBe(Rank.Ten);
+  expect(cards[4].rank).toBe(Rank.Nine);
+})
+
 test('straight', () => {
   const cardList = [
     new Card(Suit.Club, Rank.Ace),
@@ -215,4 +235,80 @@ test('straight A234567', () => {
   expect(cards[2].rank).toBe(Rank.Five);
   expect(cards[3].rank).toBe(Rank.Four);
   expect(cards[4].rank).toBe(Rank.Three);
+})
+
+test('three of a kind', () => {
+  const cardList = [
+    new Card(Suit.Club, Rank.Ace),
+    new Card(Suit.Club, Rank.Five),
+    new Card(Suit.Diamond, Rank.Ace),
+    new Card(Suit.Club, Rank.Four),
+    new Card(Suit.Spade, Rank.Ace),
+    new Card(Suit.Club, Rank.Seven),
+    new Card(Suit.Diamond, Rank.Six),
+  ];
+  const {shape, cards} = getCardShape(cardList);
+  expect(shape).toBe(Shape.ThreeOfAKind);
+  expect(cards[0].rank).toBe(Rank.Ace);
+  expect(cards[1].rank).toBe(Rank.Ace);
+  expect(cards[2].rank).toBe(Rank.Ace);
+  expect(cards[3].rank).toBe(Rank.Seven);
+  expect(cards[4].rank).toBe(Rank.Six);
+})
+
+test('two pairs', () => {
+  const cardList = [
+    new Card(Suit.Club, Rank.Ace),
+    new Card(Suit.Club, Rank.Six),
+    new Card(Suit.Diamond, Rank.Eight),
+    new Card(Suit.Club, Rank.Eight),
+    new Card(Suit.Spade, Rank.Ace),
+    new Card(Suit.Club, Rank.Seven),
+    new Card(Suit.Diamond, Rank.Six),
+  ];
+  const {shape, cards} = getCardShape(cardList);
+  expect(shape).toBe(Shape.TwoPairs);
+  expect(cards[0].rank).toBe(Rank.Ace);
+  expect(cards[1].rank).toBe(Rank.Ace);
+  expect(cards[2].rank).toBe(Rank.Eight);
+  expect(cards[3].rank).toBe(Rank.Eight);
+  expect(cards[4].rank).toBe(Rank.Seven);
+})
+
+test('one pair', () => {
+  const cardList = [
+    new Card(Suit.Club, Rank.Ace),
+    new Card(Suit.Club, Rank.King),
+    new Card(Suit.Diamond, Rank.Five),
+    new Card(Suit.Club, Rank.Eight),
+    new Card(Suit.Spade, Rank.Ace),
+    new Card(Suit.Club, Rank.Seven),
+    new Card(Suit.Diamond, Rank.Six),
+  ];
+  const {shape, cards} = getCardShape(cardList);
+  expect(shape).toBe(Shape.OnePair);
+  expect(cards[0].rank).toBe(Rank.Ace);
+  expect(cards[1].rank).toBe(Rank.Ace);
+  expect(cards[2].rank).toBe(Rank.King);
+  expect(cards[3].rank).toBe(Rank.Eight);
+  expect(cards[4].rank).toBe(Rank.Seven);
+})
+
+test('high cards', () => {
+  const cardList = [
+    new Card(Suit.Club, Rank.Ace),
+    new Card(Suit.Club, Rank.King),
+    new Card(Suit.Diamond, Rank.Five),
+    new Card(Suit.Club, Rank.Eight),
+    new Card(Suit.Spade, Rank.Two),
+    new Card(Suit.Club, Rank.Seven),
+    new Card(Suit.Diamond, Rank.Six),
+  ];
+  const {shape, cards} = getCardShape(cardList);
+  expect(shape).toBe(Shape.HighCards);
+  expect(cards[0].rank).toBe(Rank.Ace);
+  expect(cards[1].rank).toBe(Rank.King);
+  expect(cards[2].rank).toBe(Rank.Eight);
+  expect(cards[3].rank).toBe(Rank.Seven);
+  expect(cards[4].rank).toBe(Rank.Six);
 })
