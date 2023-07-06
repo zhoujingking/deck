@@ -102,6 +102,26 @@ test('straight flush A2345', () => {
   expect(cards[4].rank).toBe(Rank.Two);
 })
 
+test('straight flush A234567', () => {
+  const cardList = [
+    new Card(Suit.Club, Rank.Ace),
+    new Card(Suit.Club, Rank.Five),
+    new Card(Suit.Club, Rank.Three),
+    new Card(Suit.Club, Rank.Four),
+    new Card(Suit.Club, Rank.Two),
+    new Card(Suit.Club, Rank.Seven),
+    new Card(Suit.Club, Rank.Six),
+  ];
+  const {shape, cards} = getCardShape(cardList);
+  expect(shape).toBe(Shape.StraightFlush);
+  expect(cards[0].suit).toBe(Suit.Club);
+  expect(cards[0].rank).toBe(Rank.Seven);
+  expect(cards[1].rank).toBe(Rank.Six);
+  expect(cards[2].rank).toBe(Rank.Five);
+  expect(cards[3].rank).toBe(Rank.Four);
+  expect(cards[4].rank).toBe(Rank.Three);
+})
+
 test('quads', () => {
   const cardList = [
     new Card(Suit.Club, Rank.Ace),
@@ -119,4 +139,80 @@ test('quads', () => {
   expect(cards[2].rank).toBe(Rank.Ace);
   expect(cards[3].rank).toBe(Rank.Ace);
   expect(cards[4].rank).toBe(Rank.Nine);
+})
+
+test('full house', () => {
+  const cardList = [
+    new Card(Suit.Club, Rank.Ace),
+    new Card(Suit.Diamond, Rank.Ace),
+    new Card(Suit.Heart, Rank.Ace),
+    new Card(Suit.Spade, Rank.King),
+    new Card(Suit.Club, Rank.King),
+    new Card(Suit.Heart, Rank.King),
+    new Card(Suit.Diamond, Rank.Nine),
+  ];
+  const {shape, cards} = getCardShape(cardList);
+  expect(shape).toBe(Shape.FullHouse);
+  expect(cards[0].rank).toBe(Rank.Ace);
+  expect(cards[1].rank).toBe(Rank.Ace);
+  expect(cards[2].rank).toBe(Rank.Ace);
+  expect(cards[3].rank).toBe(Rank.King);
+  expect(cards[4].rank).toBe(Rank.King);
+})
+
+test('straight', () => {
+  const cardList = [
+    new Card(Suit.Club, Rank.Ace),
+    new Card(Suit.Spade, Rank.Ten),
+    new Card(Suit.Diamond, Rank.Eight),
+    new Card(Suit.Club, Rank.Nine),
+    new Card(Suit.Club, Rank.Six),
+    new Card(Suit.Club, Rank.Seven),
+    new Card(Suit.Diamond, Rank.Five),
+  ];
+  const {shape, cards} = getCardShape(cardList);
+  expect(shape).toBe(Shape.Straight);
+  expect(cards[0].rank).toBe(Rank.Ten);
+  expect(cards[1].rank).toBe(Rank.Nine);
+  expect(cards[2].rank).toBe(Rank.Eight);
+  expect(cards[3].rank).toBe(Rank.Seven);
+  expect(cards[4].rank).toBe(Rank.Six);
+})
+
+test('straight A2345', () => {
+  const cardList = [
+    new Card(Suit.Club, Rank.Ace),
+    new Card(Suit.Club, Rank.Five),
+    new Card(Suit.Diamond, Rank.Three),
+    new Card(Suit.Heart, Rank.Four),
+    new Card(Suit.Club, Rank.Two),
+    new Card(Suit.Spade, Rank.Seven),
+    new Card(Suit.Diamond, Rank.Eight),
+  ];
+  const {shape, cards} = getCardShape(cardList);
+  expect(shape).toBe(Shape.Straight);
+  expect(cards[0].rank).toBe(Rank.Ace);
+  expect(cards[1].rank).toBe(Rank.Five);
+  expect(cards[2].rank).toBe(Rank.Four);
+  expect(cards[3].rank).toBe(Rank.Three);
+  expect(cards[4].rank).toBe(Rank.Two);
+})
+
+test('straight A234567', () => {
+  const cardList = [
+    new Card(Suit.Club, Rank.Ace),
+    new Card(Suit.Club, Rank.Five),
+    new Card(Suit.Diamond, Rank.Three),
+    new Card(Suit.Club, Rank.Four),
+    new Card(Suit.Spade, Rank.Two),
+    new Card(Suit.Club, Rank.Seven),
+    new Card(Suit.Diamond, Rank.Six),
+  ];
+  const {shape, cards} = getCardShape(cardList);
+  expect(shape).toBe(Shape.Straight);
+  expect(cards[0].rank).toBe(Rank.Seven);
+  expect(cards[1].rank).toBe(Rank.Six);
+  expect(cards[2].rank).toBe(Rank.Five);
+  expect(cards[3].rank).toBe(Rank.Four);
+  expect(cards[4].rank).toBe(Rank.Three);
 })
