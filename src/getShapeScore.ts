@@ -1,4 +1,4 @@
-import { Shape } from './Card';
+import { Rank, Shape } from './Card';
 import { ShapeResult } from './getShape';
 
 /**
@@ -17,22 +17,27 @@ export function getShapeScore(shapeResult: ShapeResult): number {
       cardScore = 0;
       break;
     case Shape.StraightFlush:
-    case Shape.Flush:
     case Shape.Straight:
       // last 12 bits
       cardScore = cards.reduce((acc, curr) => {
-        return acc + (0b1 << curr.rank);
+        return acc + (0b1 << (curr.rank === Rank.Ace ? 1 : curr.rank));
       }, 0b0);
       break;
     case Shape.Quads:
-      // 4 bits
-      cardScore = cards[cards.length - 1].rank;
+      // 8 bits XXXX(quads) XXXX(high card)
+      cardScore = (cards[0].rank << 4) + cards[cards.length - 1].rank;
       break;
     case Shape.FullHouse:
       // 8 bits XXXX(triple)   XXXX(pair)
       const tripleRank1 = cards[0].rank << 4;
       const pairRank = cards[cards.length - 1].rank;
       cardScore = tripleRank1 + pairRank;
+      break;
+    case Shape.Flush:
+      // last 12 bits
+      cardScore = cards.reduce((acc, curr) => {
+        return acc + (0b1 << curr.rank);
+      }, 0b0);
       break;
     case Shape.ThreeOfAKind:
       // 20 bits XXXX(triple) XXXX XXXX XXXX XXXX(high cards)

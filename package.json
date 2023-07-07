@@ -4,7 +4,7 @@
   "description": "some kind of poker stuff",
   "main": "index.js",
   "scripts": {
-    "start": "tsc",
+    "build": "tsc",
     "test": "jest"
   },
   "repository": {

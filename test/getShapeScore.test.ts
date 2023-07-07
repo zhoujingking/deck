@@ -20,6 +20,7 @@ test('royal flush score', () => {
   const score = getShapeScore(shapeResult);
   expect(score).toBe(parseBinary('1010 0000 0000 0000 0000 0000'));
 })
+
 test('straight flush score', () => {
   const shapeResult = {
     shape: Shape.StraightFlush,
@@ -34,6 +35,21 @@ test('straight flush score', () => {
   const score = getShapeScore(shapeResult);
   expect(score).toBe(parseBinary('1001 0000 0011 1110 0000 0000'));
 })
+
+test('straight flush score A2345', () => {
+  const shapeResult = {
+    shape: Shape.StraightFlush,
+    cards: [
+      new Card(Suit.Club, Rank.Ace),
+      new Card(Suit.Club, Rank.Five),
+      new Card(Suit.Club, Rank.Four),
+      new Card(Suit.Club, Rank.Three),
+      new Card(Suit.Club, Rank.Two)
+    ]
+  };
+  const score = getShapeScore(shapeResult);
+  expect(score).toBe(parseBinary('1001 0000 0000 0000 0011 1110'));
+})
 test('quads score', () => {
   const shapeResult = {
     shape: Shape.Quads,
@@ -46,7 +62,7 @@ test('quads score', () => {
     ]
   };
   const score = getShapeScore(shapeResult);
-  expect(score).toBe(parseBinary('1000 0000 0000 0000 0000 1101'));
+  expect(score).toBe(parseBinary('1000 0000 0000 0000 1001 1101'));
 })
 test('full house score', () => {
   const shapeResult = {
@@ -91,6 +107,21 @@ test('straight score', () => {
   }
   const score = getShapeScore(shapeResult);
   expect(score).toBe(parseBinary('0101 0000 0000 0111 1100 0000'));
+})
+test('straight score A2345', () => {
+  const cardList = [
+    new Card(Suit.Diamond, Rank.Ace),
+    new Card(Suit.Club, Rank.Five),
+    new Card(Suit.Club, Rank.Four),
+    new Card(Suit.Club, Rank.Three),
+    new Card(Suit.Club, Rank.Two)
+  ];
+  const shapeResult = {
+    shape: Shape.Straight,
+    cards: cardList
+  }
+  const score = getShapeScore(shapeResult);
+  expect(score).toBe(parseBinary('0101 0000 0000 0000 0011 1110'));
 })
 test('three of a kind score', () => {
   const cardList = [
