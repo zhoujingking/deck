@@ -1,4 +1,4 @@
-import { Card, Rank } from './Card';
+import { Card, Rank } from './core/Card';
 import { HandType, CARD_LENGTH, HoldemHand } from './TexasHoldem';
 
 type CountMap = {

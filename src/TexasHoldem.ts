@@ -1,4 +1,4 @@
-import { Card } from './Card';
+import { Card } from './core/Card';
 
 /**
  * Represents hand type like Royal Flush, etc.

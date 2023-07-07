@@ -1,4 +1,4 @@
-import { Card, Rank, Suit } from '../src/Card';
+import { Card, Rank, Suit } from '../src/core/Card';
 import { HandType } from '../src/TexasHoldem';
 import { getHoldemHandScore } from '../src/getHoldemHandScore';
 
