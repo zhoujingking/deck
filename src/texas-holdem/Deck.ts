@@ -1,30 +1,7 @@
-import { Card, Rank, Suit } from './core/Card';
-import { shuffle } from 'lodash-es';
+import { Card, Rank, Suit } from '../core/Card';
+import _shuffle from '../utils/shuffle';
 
-/**
- * Represents hand type like Royal Flush, etc.
- */
- export enum HandType {
-  HighCards = 1,
-  OnePair,
-  TwoPairs,
-  ThreeOfAKind,
-  Straight,
-  Flush,
-  FullHouse,
-  Quads,
-  StraightFlush,
-  RoyalFlush
-}
-
-export type HoldemHand = {
-  type: HandType,
-  cards: Card[]
-}
-
-export const CARD_LENGTH = 5;
-
-export class Deck {
+export default class Deck {
   private _cards: Array<Card>
 
   constructor() {
@@ -53,7 +30,7 @@ export class Deck {
   }
 
   shuffle(): Array<Card> {
-    return shuffle(this._cards);
+    return _shuffle(this._cards);
   }
 
   pick(): Card {

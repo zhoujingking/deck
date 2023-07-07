@@ -1,6 +1,6 @@
 import { Card, Rank, Suit } from '../src/core/Card';
-import { getHoldemHand } from '../src/getHoldemHand';
-import { HandType } from '../src/TexasHoldem';
+import { getHoldemHand } from '../src/texas-holdem/getHoldemHand';
+import HandType from '../src/texas-holdem/HandType';
 
 test('royal flush', () => {
   const cardList = [

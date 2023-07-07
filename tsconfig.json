@@ -4,7 +4,7 @@
     "noEmitOnError": true,
     "removeComments": false,
     "sourceMap": true,
-    "moduleResolution": "nodenext",
+    "moduleResolution": "NodeNext",
     "target": "ES6",
     "outDir": "dist"
   },

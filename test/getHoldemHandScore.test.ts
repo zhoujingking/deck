@@ -1,6 +1,6 @@
 import { Card, Rank, Suit } from '../src/core/Card';
-import { getHoldemHandScore } from '../src/getHoldemHandScore';
-import { HandType } from '../src/TexasHoldem';
+import { getHoldemHandScore } from '../src/texas-holdem/getHoldemHandScore';
+import HandType from '../src/texas-holdem/HandType';
 
 function parseBinary(text) {
   const target = text.split(' ').join('');

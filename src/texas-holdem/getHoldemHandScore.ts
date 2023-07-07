@@ -1,5 +1,6 @@
-import { Rank } from './core/Card';
-import { HandType, HoldemHand } from './TexasHoldem';
+import { Rank } from '../core/Card';
+import HandType from './HandType';
+import HoldemHand from './HoldemHand';
 
 function getShapeTypeScore(type: HandType) {
   return type << 20;

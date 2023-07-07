@@ -1,5 +1,8 @@
-import { Card, Rank } from './core/Card';
-import { HandType, CARD_LENGTH, HoldemHand } from './TexasHoldem';
+import { Card, Rank } from '../core/Card';
+import HandType from './HandType';
+import HoldemHand from './HoldemHand';
+
+const CARD_LENGTH = 5;
 
 type CountMap = {
   [s: string]: Card[]
