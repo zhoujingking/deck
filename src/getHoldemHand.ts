@@ -1,12 +1,8 @@
-import { Card, Rank, Shape, HAND_LENTH } from './Card';
+import { Card, Rank } from './Card';
+import { HandType, CARD_LENGTH, HoldemHand } from './TexasHoldem';
 
 type CountMap = {
   [s: string]: Card[]
-}
-
-export type ShapeResult = {
-  shape: Shape,
-  cards: Card[]
 }
 
 function getCountMapBySuit(cardList: Card[]): CountMap  {
@@ -56,49 +52,49 @@ function sortCardInReverseOrder<List extends Array<Card>>(list: List, count?: nu
 }
 
 function getStraight(cardsInReverseOrder: Card[]): Card[] | null {
-  for (let index = 0; index < cardsInReverseOrder.length - HAND_LENTH + 1; ++index) {
-    if (cardsInReverseOrder[index].rank - cardsInReverseOrder[index + HAND_LENTH - 1].rank === HAND_LENTH -1) {
-      return cardsInReverseOrder.slice(index, index + HAND_LENTH)
+  for (let index = 0; index < cardsInReverseOrder.length - CARD_LENGTH + 1; ++index) {
+    if (cardsInReverseOrder[index].rank - cardsInReverseOrder[index + CARD_LENGTH - 1].rank === CARD_LENGTH -1) {
+      return cardsInReverseOrder.slice(index, index + CARD_LENGTH)
     }
   }
   // special case A2345
-  if (cardsInReverseOrder[0].rank === Rank.Ace && cardsInReverseOrder[cardsInReverseOrder.length - HAND_LENTH + 1].rank === 5) {
-    return [cardsInReverseOrder[0], ...cardsInReverseOrder.slice(cardsInReverseOrder.length - HAND_LENTH + 1, cardsInReverseOrder.length)]
+  if (cardsInReverseOrder[0].rank === Rank.Ace && cardsInReverseOrder[cardsInReverseOrder.length - CARD_LENGTH + 1].rank === 5) {
+    return [cardsInReverseOrder[0], ...cardsInReverseOrder.slice(cardsInReverseOrder.length - CARD_LENGTH + 1, cardsInReverseOrder.length)]
   }
   return null;
 }
 
 /**
- * Get shape of cards
+ * Get holdem hands from cards
  * @param cardList Cards[]
- * @returns ShapeResult
+ * @returns HoldemHand
  */
-export function getCardShape(cardList: Card[]): ShapeResult {
+export function getHoldemHand(cardList: Card[]): HoldemHand {
   // check Royal Flush & Straight Flush
   const suitCountMap = getCountMapBySuit(cardList);
   const flushCards = Object.values(suitCountMap).find((cards) => cards.length >= 5);
-  let possibleResult: ShapeResult;
+  let possibleResult: HoldemHand;
   if (flushCards) {
     // possible royal flush here
     // sort these cards in reverse order
     const cardsInReverseOrder = sortCardInReverseOrder(flushCards);
-    if (cardsInReverseOrder[HAND_LENTH - 1].rank === Rank.Ten) {
+    if (cardsInReverseOrder[CARD_LENGTH - 1].rank === Rank.Ten) {
       return {
-        shape: Shape.RoyalFlush,
-        cards: cardsInReverseOrder.slice(0, HAND_LENTH)
+        type: HandType.RoyalFlush,
+        cards: cardsInReverseOrder.slice(0, CARD_LENGTH)
       };
     }
     // check straight flush
     const straightCards = getStraight(cardsInReverseOrder);
     if (straightCards) {
       return {
-        shape: Shape.StraightFlush,
+        type: HandType.StraightFlush,
         cards: straightCards
       };
     }
     possibleResult = {
-      shape: Shape.Flush,
-      cards: cardsInReverseOrder.slice(0, HAND_LENTH)
+      type: HandType.Flush,
+      cards: cardsInReverseOrder.slice(0, CARD_LENGTH)
     };
   }
 
@@ -111,7 +107,7 @@ export function getCardShape(cardList: Card[]): ShapeResult {
     const highestRank = Math.max(...otherCards.map(card => card.rank));
     const card = otherCards.find(c => c.rank === highestRank);
     return {
-      shape: Shape.Quads,
+      type: HandType.Quads,
       cards: [...quadCards, card]
     }
   }
@@ -128,20 +124,20 @@ export function getCardShape(cardList: Card[]): ShapeResult {
       const pairRank = Math.max(...pairTargetList.map((cards) => cards[0].rank));
       const pairCards = rankCountMap[pairRank].slice(0, 2);
       return {
-        shape: Shape.FullHouse,
+        type: HandType.FullHouse,
         cards: [...tripleCards, ...pairCards]
       }
     }
     const otherCards = sortCardInReverseOrder(cardList.filter(card => card.rank !== tripleRank), 2);
     // three of a kind
     possibleResult = {
-      shape: Shape.ThreeOfAKind,
+      type: HandType.ThreeOfAKind,
       cards: [...tripleCards, ...otherCards]
     }
   }
 
   // flush
-  if (possibleResult?.shape === Shape.Flush) {
+  if (possibleResult?.type === HandType.Flush) {
     return possibleResult;
   }
 
@@ -153,14 +149,14 @@ export function getCardShape(cardList: Card[]): ShapeResult {
     const straightCards = getStraight(cardsInReverseOrder);
     if (straightCards) {
       return {
-        shape: Shape.Straight,
+        type: HandType.Straight,
         cards: straightCards
       }
     }
   }
 
   // three of a kind
-  if (possibleResult?.shape === Shape.ThreeOfAKind) {
+  if (possibleResult?.type === HandType.ThreeOfAKind) {
     return possibleResult;
   }
 
@@ -175,7 +171,7 @@ export function getCardShape(cardList: Card[]): ShapeResult {
 
     const otherHighestCards = sortCardInReverseOrder(cardList.filter(card => !rankList.includes(card.rank)), 1);
     return {
-      shape: Shape.TwoPairs,
+      type: HandType.TwoPairs,
       cards: [...cards, ...otherHighestCards]
     }
   }
@@ -186,14 +182,14 @@ export function getCardShape(cardList: Card[]): ShapeResult {
     const rank = pair[0].rank;
     const otherHighestCards = sortCardInReverseOrder(cardList.filter(card => rank !== card.rank), 3);
     return {
-      shape: Shape.OnePair,
+      type: HandType.OnePair,
       cards: [...pair, ...otherHighestCards]
     }
   }
 
   // high cards
   return {
-    shape: Shape.HighCards,
-    cards: sortCardInReverseOrder(cardList, HAND_LENTH)
+    type: HandType.HighCards,
+    cards: sortCardInReverseOrder(cardList, CARD_LENGTH)
   };
 }

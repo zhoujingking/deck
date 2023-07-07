@@ -1,9 +1,10 @@
-import { Card, Rank, Shape, Suit } from '../src/Card';
-import { getShapeScore } from '../src/getShapeScore';
+import { Card, Rank, Suit } from '../src/Card';
+import { HandType } from '../src/TexasHoldem';
+import { getHoldemHandScore } from '../src/getHoldemHandScore';
 
-test('shape compare', () => {
-  const royalFlushScore = getShapeScore({
-    shape: Shape.RoyalFlush,
+test('Holdem hands compare', () => {
+  const royalFlushScore = getHoldemHandScore({
+    type: HandType.RoyalFlush,
     cards: [
       new Card(Suit.Club, Rank.Ace),
       new Card(Suit.Club, Rank.King),
@@ -12,8 +13,8 @@ test('shape compare', () => {
       new Card(Suit.Club, Rank.Ten)
     ]
   });
-  const straightFlushScore = getShapeScore({
-    shape: Shape.StraightFlush,
+  const straightFlushScore = getHoldemHandScore({
+    type: HandType.StraightFlush,
     cards: [
       new Card(Suit.Club, Rank.King),
       new Card(Suit.Club, Rank.Queen),
@@ -22,8 +23,8 @@ test('shape compare', () => {
       new Card(Suit.Club, Rank.Nine)
     ]
   });
-  const quadsScore = getShapeScore({
-    shape: Shape.Quads,
+  const quadsScore = getHoldemHandScore({
+    type: HandType.Quads,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Spade, Rank.Nine),
@@ -32,8 +33,8 @@ test('shape compare', () => {
       new Card(Suit.Club, Rank.King)
     ]
   });
-  const fullhouseScore = getShapeScore({
-    shape: Shape.FullHouse,
+  const fullhouseScore = getHoldemHandScore({
+    type: HandType.FullHouse,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Spade, Rank.Nine),
@@ -42,8 +43,8 @@ test('shape compare', () => {
       new Card(Suit.Club, Rank.Ten),
     ]
   });
-  const flushScore = getShapeScore({
-    shape: Shape.Flush,
+  const flushScore = getHoldemHandScore({
+    type: HandType.Flush,
     cards: [
       new Card(Suit.Club, Rank.Ace),
       new Card(Suit.Club, Rank.Ten),
@@ -52,8 +53,8 @@ test('shape compare', () => {
       new Card(Suit.Club, Rank.Two)
     ]
   });
-  const straightScore = getShapeScore({
-    shape: Shape.Straight,
+  const straightScore = getHoldemHandScore({
+    type: HandType.Straight,
     cards: [
       new Card(Suit.Diamond, Rank.Ten),
       new Card(Suit.Club, Rank.Nine),
@@ -62,8 +63,8 @@ test('shape compare', () => {
       new Card(Suit.Club, Rank.Six)
     ]
   });
-  const threeOfAKindScore = getShapeScore({
-    shape: Shape.ThreeOfAKind,
+  const threeOfAKindScore = getHoldemHandScore({
+    type: HandType.ThreeOfAKind,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Diamond, Rank.Nine),
@@ -72,8 +73,8 @@ test('shape compare', () => {
       new Card(Suit.Club, Rank.Seven)
     ]
   });
-  const twoPairsScore = getShapeScore({
-    shape: Shape.TwoPairs,
+  const twoPairsScore = getHoldemHandScore({
+    type: HandType.TwoPairs,
     cards: [
       new Card(Suit.Heart, Rank.Ace),
       new Card(Suit.Club, Rank.Ace),
@@ -82,8 +83,8 @@ test('shape compare', () => {
       new Card(Suit.Club, Rank.Seven)
     ]
   });
-  const onePairScore = getShapeScore({
-    shape: Shape.OnePair,
+  const onePairScore = getHoldemHandScore({
+    type: HandType.OnePair,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Diamond, Rank.Nine),
@@ -92,8 +93,8 @@ test('shape compare', () => {
       new Card(Suit.Club, Rank.Seven)
     ]
   });
-  const highCardsScore = getShapeScore({
-    shape: Shape.HighCards,
+  const highCardsScore = getHoldemHandScore({
+    type: HandType.HighCards,
     cards: [
       new Card(Suit.Heart, Rank.Ace),
       new Card(Suit.Club, Rank.Queen),
@@ -115,8 +116,8 @@ test('shape compare', () => {
 })
 
 test('straight flush comparison', () => {
-  const straightFlushScore1 = getShapeScore({
-    shape: Shape.StraightFlush,
+  const straightFlushScore1 = getHoldemHandScore({
+    type: HandType.StraightFlush,
     cards: [
       new Card(Suit.Club, Rank.King),
       new Card(Suit.Club, Rank.Queen),
@@ -125,8 +126,8 @@ test('straight flush comparison', () => {
       new Card(Suit.Club, Rank.Nine)
     ]
   });
-  const straightFlushScore2 = getShapeScore({
-    shape: Shape.StraightFlush,
+  const straightFlushScore2 = getHoldemHandScore({
+    type: HandType.StraightFlush,
     cards: [
       new Card(Suit.Diamond, Rank.King),
       new Card(Suit.Diamond, Rank.Queen),
@@ -135,8 +136,8 @@ test('straight flush comparison', () => {
       new Card(Suit.Diamond, Rank.Nine)
     ]
   });
-  const straightFlushScore3 = getShapeScore({
-    shape: Shape.StraightFlush,
+  const straightFlushScore3 = getHoldemHandScore({
+    type: HandType.StraightFlush,
     cards: [
       new Card(Suit.Diamond, Rank.Ace),
       new Card(Suit.Diamond, Rank.Five),
@@ -145,8 +146,8 @@ test('straight flush comparison', () => {
       new Card(Suit.Diamond, Rank.Two)
     ]
   });
-  const straightFlushScore4 = getShapeScore({
-    shape: Shape.StraightFlush,
+  const straightFlushScore4 = getHoldemHandScore({
+    type: HandType.StraightFlush,
     cards: [
       new Card(Suit.Diamond, Rank.Ten),
       new Card(Suit.Diamond, Rank.Nine),
@@ -162,8 +163,8 @@ test('straight flush comparison', () => {
 })
 
 test('quads score comparison', () => {
-  const quadsScore1 = getShapeScore({
-    shape: Shape.Quads,
+  const quadsScore1 = getHoldemHandScore({
+    type: HandType.Quads,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Spade, Rank.Nine),
@@ -172,8 +173,8 @@ test('quads score comparison', () => {
       new Card(Suit.Club, Rank.Two)
     ]
   });
-  const quadsScore2 = getShapeScore({
-    shape: Shape.Quads,
+  const quadsScore2 = getHoldemHandScore({
+    type: HandType.Quads,
     cards: [
       new Card(Suit.Club, Rank.Eight),
       new Card(Suit.Spade, Rank.Eight),
@@ -185,8 +186,8 @@ test('quads score comparison', () => {
   expect(quadsScore1).toBeGreaterThan(quadsScore2);
 });
 test('full house score comparison', () => {
-  const fullhouseScore1 = getShapeScore({
-    shape: Shape.FullHouse,
+  const fullhouseScore1 = getHoldemHandScore({
+    type: HandType.FullHouse,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Spade, Rank.Nine),
@@ -195,8 +196,8 @@ test('full house score comparison', () => {
       new Card(Suit.Club, Rank.Two),
     ]
   });
-  const fullhouseScore2 = getShapeScore({
-    shape: Shape.FullHouse,
+  const fullhouseScore2 = getHoldemHandScore({
+    type: HandType.FullHouse,
     cards: [
       new Card(Suit.Club, Rank.Six),
       new Card(Suit.Spade, Rank.Six),
@@ -205,8 +206,8 @@ test('full house score comparison', () => {
       new Card(Suit.Club, Rank.Ace),
     ]
   });
-  const fullhouseScore3 = getShapeScore({
-    shape: Shape.FullHouse,
+  const fullhouseScore3 = getHoldemHandScore({
+    type: HandType.FullHouse,
     cards: [
       new Card(Suit.Club, Rank.Six),
       new Card(Suit.Spade, Rank.Six),
@@ -220,8 +221,8 @@ test('full house score comparison', () => {
 });
 
 test('flush score comparison', () => {
-  const flushScore1 = getShapeScore({
-    shape: Shape.Flush,
+  const flushScore1 = getHoldemHandScore({
+    type: HandType.Flush,
     cards: [
       new Card(Suit.Club, Rank.Ace),
       new Card(Suit.Club, Rank.Ten),
@@ -230,8 +231,8 @@ test('flush score comparison', () => {
       new Card(Suit.Club, Rank.Two)
     ]
   });
-  const flushScore2 = getShapeScore({
-    shape: Shape.Flush,
+  const flushScore2 = getHoldemHandScore({
+    type: HandType.Flush,
     cards: [
       new Card(Suit.Club, Rank.King),
       new Card(Suit.Club, Rank.Ten),
@@ -240,8 +241,8 @@ test('flush score comparison', () => {
       new Card(Suit.Club, Rank.Two)
     ]
   });
-  const flushScore3 = getShapeScore({
-    shape: Shape.Flush,
+  const flushScore3 = getHoldemHandScore({
+    type: HandType.Flush,
     cards: [
       new Card(Suit.Club, Rank.Ace),
       new Card(Suit.Club, Rank.Ten),
@@ -256,8 +257,8 @@ test('flush score comparison', () => {
 })
 
 test('straight score comparison', () => {
-  const straightScore1 = getShapeScore({
-    shape: Shape.Straight,
+  const straightScore1 = getHoldemHandScore({
+    type: HandType.Straight,
     cards: [
       new Card(Suit.Diamond, Rank.Ace),
       new Card(Suit.Club, Rank.King),
@@ -266,8 +267,8 @@ test('straight score comparison', () => {
       new Card(Suit.Club, Rank.Ten)
     ]
   });
-  const straightScore2 = getShapeScore({
-    shape: Shape.Straight,
+  const straightScore2 = getHoldemHandScore({
+    type: HandType.Straight,
     cards: [
       new Card(Suit.Diamond, Rank.Ace),
       new Card(Suit.Club, Rank.Five),
@@ -276,8 +277,8 @@ test('straight score comparison', () => {
       new Card(Suit.Club, Rank.Two)
     ]
   });
-  const straightScore3 = getShapeScore({
-    shape: Shape.Straight,
+  const straightScore3 = getHoldemHandScore({
+    type: HandType.Straight,
     cards: [
       new Card(Suit.Diamond, Rank.Ten),
       new Card(Suit.Club, Rank.Nine),
@@ -292,8 +293,8 @@ test('straight score comparison', () => {
 })
 
 test('three of a kind score comparison', () => {
-  const threeOfAKindScore1 = getShapeScore({
-    shape: Shape.ThreeOfAKind,
+  const threeOfAKindScore1 = getHoldemHandScore({
+    type: HandType.ThreeOfAKind,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Diamond, Rank.Nine),
@@ -302,8 +303,8 @@ test('three of a kind score comparison', () => {
       new Card(Suit.Club, Rank.Seven)
     ]
   });
-  const threeOfAKindScore2 = getShapeScore({
-    shape: Shape.ThreeOfAKind,
+  const threeOfAKindScore2 = getHoldemHandScore({
+    type: HandType.ThreeOfAKind,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Diamond, Rank.Nine),
@@ -312,8 +313,8 @@ test('three of a kind score comparison', () => {
       new Card(Suit.Club, Rank.Seven)
     ]
   });
-  const threeOfAKindScore3 = getShapeScore({
-    shape: Shape.ThreeOfAKind,
+  const threeOfAKindScore3 = getHoldemHandScore({
+    type: HandType.ThreeOfAKind,
     cards: [
       new Card(Suit.Club, Rank.Eight),
       new Card(Suit.Diamond, Rank.Eight),
@@ -326,8 +327,8 @@ test('three of a kind score comparison', () => {
   expect(threeOfAKindScore2).toBeGreaterThan(threeOfAKindScore3);
 })
 test('two pairs score comparison', () => {
-  const twoPairsScore1 = getShapeScore({
-    shape: Shape.TwoPairs,
+  const twoPairsScore1 = getHoldemHandScore({
+    type: HandType.TwoPairs,
     cards: [
       new Card(Suit.Heart, Rank.Ace),
       new Card(Suit.Club, Rank.Ace),
@@ -336,8 +337,8 @@ test('two pairs score comparison', () => {
       new Card(Suit.Club, Rank.Seven)
     ]
   });
-  const twoPairsScore2 = getShapeScore({
-    shape: Shape.TwoPairs,
+  const twoPairsScore2 = getHoldemHandScore({
+    type: HandType.TwoPairs,
     cards: [
       new Card(Suit.Heart, Rank.Ace),
       new Card(Suit.Club, Rank.Ace),
@@ -346,8 +347,8 @@ test('two pairs score comparison', () => {
       new Card(Suit.Club, Rank.Six)
     ]
   });
-  const twoPairsScore3 = getShapeScore({
-    shape: Shape.TwoPairs,
+  const twoPairsScore3 = getHoldemHandScore({
+    type: HandType.TwoPairs,
     cards: [
       new Card(Suit.Heart, Rank.King),
       new Card(Suit.Club, Rank.King),
@@ -356,8 +357,8 @@ test('two pairs score comparison', () => {
       new Card(Suit.Club, Rank.Six)
     ]
   });
-  const twoPairsScore4 = getShapeScore({
-    shape: Shape.TwoPairs,
+  const twoPairsScore4 = getHoldemHandScore({
+    type: HandType.TwoPairs,
     cards: [
       new Card(Suit.Heart, Rank.King),
       new Card(Suit.Club, Rank.King),
@@ -371,8 +372,8 @@ test('two pairs score comparison', () => {
   expect(twoPairsScore3).toBeGreaterThan(twoPairsScore4);
 })
 test('one pair score comparison', () => {
-  const onePairScore1 = getShapeScore({
-    shape: Shape.OnePair,
+  const onePairScore1 = getHoldemHandScore({
+    type: HandType.OnePair,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Diamond, Rank.Nine),
@@ -381,8 +382,8 @@ test('one pair score comparison', () => {
       new Card(Suit.Club, Rank.Seven)
     ]
   });
-  const onePairScore2 = getShapeScore({
-    shape: Shape.OnePair,
+  const onePairScore2 = getHoldemHandScore({
+    type: HandType.OnePair,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Diamond, Rank.Nine),
@@ -391,8 +392,8 @@ test('one pair score comparison', () => {
       new Card(Suit.Club, Rank.Seven)
     ]
   });
-  const onePairScore3 = getShapeScore({
-    shape: Shape.OnePair,
+  const onePairScore3 = getHoldemHandScore({
+    type: HandType.OnePair,
     cards: [
       new Card(Suit.Club, Rank.Two),
       new Card(Suit.Diamond, Rank.Two),
@@ -406,8 +407,8 @@ test('one pair score comparison', () => {
   expect(onePairScore2).toBeGreaterThan(onePairScore3);
 })
 test('high cards score comparison', () => {
-  const highCardsScore1 = getShapeScore({
-    shape: Shape.HighCards,
+  const highCardsScore1 = getHoldemHandScore({
+    type: HandType.HighCards,
     cards: [
       new Card(Suit.Heart, Rank.Ace),
       new Card(Suit.Club, Rank.Queen),
@@ -416,8 +417,8 @@ test('high cards score comparison', () => {
       new Card(Suit.Club, Rank.Two)
     ]
   });
-  const highCardsScore2 = getShapeScore({
-    shape: Shape.HighCards,
+  const highCardsScore2 = getHoldemHandScore({
+    type: HandType.HighCards,
     cards: [
       new Card(Suit.Heart, Rank.Ace),
       new Card(Suit.Club, Rank.Queen),
@@ -426,8 +427,8 @@ test('high cards score comparison', () => {
       new Card(Suit.Club, Rank.Two)
     ]
   });
-  const highCardsScore3 = getShapeScore({
-    shape: Shape.HighCards,
+  const highCardsScore3 = getHoldemHandScore({
+    type: HandType.HighCards,
     cards: [
       new Card(Suit.Heart, Rank.Ace),
       new Card(Suit.Club, Rank.Queen),

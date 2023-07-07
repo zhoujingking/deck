@@ -1,5 +1,6 @@
-import { Card, Rank, Shape, Suit } from '../src/Card';
-import { getShapeScore } from '../src/getShapeScore';
+import { Card, Rank, Suit } from '../src/Card';
+import { getHoldemHandScore } from '../src/getHoldemHandScore';
+import { HandType } from '../src/TexasHoldem';
 
 function parseBinary(text) {
   const target = text.split(' ').join('');
@@ -7,8 +8,8 @@ function parseBinary(text) {
 }
 
 test('royal flush score', () => {
-  const shapeResult = {
-    shape: Shape.RoyalFlush,
+  const holdemHand = {
+    type: HandType.RoyalFlush,
     cards: [
       new Card(Suit.Club, Rank.Ace),
       new Card(Suit.Club, Rank.King),
@@ -17,13 +18,13 @@ test('royal flush score', () => {
       new Card(Suit.Club, Rank.Ten)
     ]
   };
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('1010 0000 0000 0000 0000 0000'));
 })
 
 test('straight flush score', () => {
-  const shapeResult = {
-    shape: Shape.StraightFlush,
+  const holdemHand = {
+    type: HandType.StraightFlush,
     cards: [
       new Card(Suit.Club, Rank.King),
       new Card(Suit.Club, Rank.Queen),
@@ -32,13 +33,13 @@ test('straight flush score', () => {
       new Card(Suit.Club, Rank.Nine)
     ]
   };
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('1001 0000 0011 1110 0000 0000'));
 })
 
 test('straight flush score A2345', () => {
-  const shapeResult = {
-    shape: Shape.StraightFlush,
+  const holdemHand = {
+    type: HandType.StraightFlush,
     cards: [
       new Card(Suit.Club, Rank.Ace),
       new Card(Suit.Club, Rank.Five),
@@ -47,12 +48,12 @@ test('straight flush score A2345', () => {
       new Card(Suit.Club, Rank.Two)
     ]
   };
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('1001 0000 0000 0000 0011 1110'));
 })
 test('quads score', () => {
-  const shapeResult = {
-    shape: Shape.Quads,
+  const holdemHand = {
+    type: HandType.Quads,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Spade, Rank.Nine),
@@ -61,12 +62,12 @@ test('quads score', () => {
       new Card(Suit.Club, Rank.King),
     ]
   };
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('1000 0000 0000 0000 1001 1101'));
 })
 test('full house score', () => {
-  const shapeResult = {
-    shape: Shape.FullHouse,
+  const holdemHand = {
+    type: HandType.FullHouse,
     cards: [
       new Card(Suit.Club, Rank.Nine),
       new Card(Suit.Spade, Rank.Nine),
@@ -75,7 +76,7 @@ test('full house score', () => {
       new Card(Suit.Club, Rank.Ten),
     ]
   };
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('0111 0000 0000 0000 1001 1010'));
 })
 test('flush score', () => {
@@ -86,11 +87,11 @@ test('flush score', () => {
     new Card(Suit.Club, Rank.Five),
     new Card(Suit.Club, Rank.Two),
   ];
-  const shapeResult = {
-    shape: Shape.Flush,
+  const holdemHand = {
+    type: HandType.Flush,
     cards: cardList
   }
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('0110 0000 0100 0100 1010 0100'));
 })
 test('straight score', () => {
@@ -101,11 +102,11 @@ test('straight score', () => {
     new Card(Suit.Club, Rank.Seven),
     new Card(Suit.Club, Rank.Six)
   ];
-  const shapeResult = {
-    shape: Shape.Straight,
+  const holdemHand = {
+    type: HandType.Straight,
     cards: cardList
   }
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('0101 0000 0000 0111 1100 0000'));
 })
 test('straight score A2345', () => {
@@ -116,11 +117,11 @@ test('straight score A2345', () => {
     new Card(Suit.Club, Rank.Three),
     new Card(Suit.Club, Rank.Two)
   ];
-  const shapeResult = {
-    shape: Shape.Straight,
+  const holdemHand = {
+    type: HandType.Straight,
     cards: cardList
   }
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('0101 0000 0000 0000 0011 1110'));
 })
 test('three of a kind score', () => {
@@ -131,11 +132,11 @@ test('three of a kind score', () => {
     new Card(Suit.Club, Rank.Ace),
     new Card(Suit.Club, Rank.Seven)
   ];
-  const shapeResult = {
-    shape: Shape.ThreeOfAKind,
+  const holdemHand = {
+    type: HandType.ThreeOfAKind,
     cards: cardList
   };
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('0100 1001 0100 0000 1000 0000'));
 })
 test('two pairs score', () => {
@@ -146,11 +147,11 @@ test('two pairs score', () => {
     new Card(Suit.Diamond, Rank.Nine),
     new Card(Suit.Club, Rank.Seven)
   ];
-  const shapeResult = {
-    shape: Shape.TwoPairs,
+  const holdemHand = {
+    type: HandType.TwoPairs,
     cards: cardList
   };
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('0011 0000 0000 1110 1001 0111'));
 })
 test('one pair score', () => {
@@ -161,11 +162,11 @@ test('one pair score', () => {
     new Card(Suit.Club, Rank.Queen),
     new Card(Suit.Club, Rank.Seven)
   ];
-  const shapeResult = {
-    shape: Shape.OnePair,
+  const holdemHand = {
+    type: HandType.OnePair,
     cards: cardList
   };
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('0010 1001 0101 0000 1000 0000'));
 })
 test('high card score', () => {
@@ -176,10 +177,10 @@ test('high card score', () => {
     new Card(Suit.Club, Rank.Seven),
     new Card(Suit.Club, Rank.Two)
   ];
-  const shapeResult = {
-    shape: Shape.HighCards,
+  const holdemHand = {
+    type: HandType.HighCards,
     cards: cardList
   };
-  const score = getShapeScore(shapeResult);
+  const score = getHoldemHandScore(holdemHand);
   expect(score).toBe(parseBinary('0001 0000 0101 0010 1000 0100'));
 })

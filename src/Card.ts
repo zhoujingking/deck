@@ -39,21 +39,3 @@ export class Card {
     this.rank = rank;
   }
 }
-
-/**
- * Represents card shape like Royal Flush, etc.
- */
-export enum Shape {
-  HighCards = 1,
-  OnePair,
-  TwoPairs,
-  ThreeOfAKind,
-  Straight,
-  Flush,
-  FullHouse,
-  Quads,
-  StraightFlush,
-  RoyalFlush
-}
-
-export const HAND_LENTH = 5;
