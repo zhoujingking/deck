@@ -35,12 +35,19 @@ class Table implements ITable {
     this._seats[availableIndex] = null;
   }
 
+  /**
+   * if the table already has one dealer, the replace it
+   * @param dealer 
+   */
   addDealer(dealer: Dealer) {
+    if (this._dealer) { // unbound this table
+      this._dealer.setTable(null);
+    }
     this._dealer = dealer;
     dealer.setTable(this);
   }
 
-  getDealer(): Dealer {
+  get dealer(): Dealer {
     return this._dealer;
   }
 
