@@ -1,10 +1,11 @@
-import Dealer from '../../src/core/Dealer';
+import Dealer from '../../src/texas-holdem/Dealer';
 import Player from '../../src/core/Player';
-import Table from '../../src/core/Table';
+import Table from '../../src/texas-holdem/Table';
 
 test('table adds palyer successfully', () => {
   const dealer = new Dealer('GodKing');
-  const table = new Table(dealer);
+  const table = new Table();
+  table.dealer = dealer;
 
   expect(table.dealer).toBe(dealer);
   expect(table.availableSeats.length).toBe(8);
@@ -32,7 +33,8 @@ test('table adds palyer successfully', () => {
 })
 test('table adds too many palyers will throw errors', () => {
   const dealer = new Dealer('GodKing');
-  const table = new Table(dealer);
+  const table = new Table();
+  table.dealer = dealer;
 
   expect(table.dealer).toBe(dealer);
   expect(table.availableSeats.length).toBe(8);
@@ -60,7 +62,8 @@ test('table adds too many palyers will throw errors', () => {
 
 test('table adds the same palyer twice should throw error', () => {
   const dealer = new Dealer('GodKing');
-  const table = new Table(dealer);
+  const table = new Table();
+  table.dealer = dealer;
 
   const playerJack = new Player('Jack');
 
@@ -70,7 +73,8 @@ test('table adds the same palyer twice should throw error', () => {
 
 test('table remove non-existing palyer should throw error', () => {
   const dealer = new Dealer('GodKing');
-  const table = new Table(dealer);
+  const table = new Table();
+  table.dealer = dealer;
 
   const playerJack = new Player('Jack');
   const playerKate = new Player('Kate');

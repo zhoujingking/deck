@@ -1,7 +1,8 @@
 import { Card, Rank, Suit } from '../core/Card';
+import IDeck from '../core/IDeck';
 import _shuffle from '../utils/shuffle';
 
-export default class Deck {
+export default class Deck implements IDeck {
   private _cards: Array<Card>
 
   constructor() {
@@ -33,7 +34,7 @@ export default class Deck {
     return _shuffle(this._cards);
   }
 
-  pick(): Card {
+  pop(): Card {
     return this._cards.shift();
   }
 }

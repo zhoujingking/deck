@@ -1,6 +1,6 @@
-import { Card, Rank, Suit } from '../src/core/Card';
-import HandType from '../src/texas-holdem/HandType';
-import { getHoldemHandScore } from '../src/texas-holdem/getHoldemHandScore';
+import { Card, Rank, Suit } from '../../src/core/Card';
+import HandType from '../../src/texas-holdem/HandType';
+import { getHoldemHandScore } from '../../src/texas-holdem/getHoldemHandScore';
 
 test('Holdem hands compare', () => {
   const royalFlushScore = getHoldemHandScore({

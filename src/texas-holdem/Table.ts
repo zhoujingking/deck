@@ -1,12 +1,16 @@
 import Dealer from './Dealer'
-import Player from './Player'
+import Player from '../core/Player'
+import ITable from '../core/ITable';
+import { Card } from '../core/Card';
 
-export default class Table {
-  private _dealer: Dealer
-  private _seats: Array<Player | null>
+class Table implements ITable {
+  private _seats: Array<Player | null>;
+  private _flopCards: Array<Card>;
+  _dealer: Dealer;
+  turnCard: Card;
+  riverCard: Card;
 
-  constructor(dealer: Dealer, numOfSeats: number = 8) {
-    this._dealer = dealer;
+  constructor(numOfSeats: number = 8) {
     this._seats = new Array<Player | null>(numOfSeats).fill(null);
   }
 
@@ -31,13 +35,18 @@ export default class Table {
     this._seats[availableIndex] = null;
   }
 
-  // getters
-  get players(): Array<Player | null> {
-    return this._seats.filter(player => !!player);
+  addDealer(dealer: Dealer) {
+    this._dealer = dealer;
+    dealer.setTable(this);
   }
 
-  get dealer(): Dealer {
+  getDealer(): Dealer {
     return this._dealer;
+  }
+
+  // getters
+  get players(): Array<Player> {
+    return this._seats.filter(player => !!player);
   }
 
   get availableSeats(): Array<number> {
@@ -49,4 +58,17 @@ export default class Table {
     })
     return seats;
   }
+
+  get flopCards() {
+    return this._flopCards;
+  }
+
+  set flopCards(value: Array<Card>) {
+    if (value.length !== 3) {
+      throw new Error('Flop must have three cards');
+    }
+    this._flopCards = value;
+  }
 }
+
+export default Table;

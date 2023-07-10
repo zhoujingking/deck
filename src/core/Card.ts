@@ -38,4 +38,8 @@ export class Card {
     this.suit = suit;
     this.rank = rank;
   }
+
+  get image() {
+    return '';
+  }
 }
