@@ -20,6 +20,10 @@ class Player implements IPerson {
   addCard(card: Card) {
     this._cards.push(card);
   }
+
+  get cards(): Array<Card> {
+    return this._cards;
+  }
 }
 
 export default Player;
