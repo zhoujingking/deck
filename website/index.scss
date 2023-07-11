@@ -1,0 +1,50 @@
+.row {
+  display: flex;
+}
+
+.table-container {
+  position: relative;
+  padding: 100px;
+  background-color: aqua;
+  .table {
+    width: 500px;
+    height: 300px;
+    border-radius: 300px;
+    background-color: purple;
+  }
+
+  .seat-placement {
+    position: absolute;
+  }
+  .seat1 {
+    left: 20px;
+    top: 50%;
+  }
+  .seat2 {
+    left: 70px;
+    top: 100px;
+  }
+
+  .seat3 {
+    left: 230px;
+    top: 30px;
+  }
+  .seat4 {
+    left: 400px;
+    top: 30px;
+  }
+  .seat5 {
+    right: 70px;
+    top: 100px;
+  }
+  .seat6 {
+    right: 20px;
+    top: 50%;
+  }
+}
+
+.seat {
+  width: 60px;
+  height: 60px;
+  background-color: green;
+}

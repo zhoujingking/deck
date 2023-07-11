@@ -22,6 +22,15 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.scss$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader', {
+          loader: 'style-resources-loader',
+          options: {
+            patterns: path.resolve(__dirname, 'src/styles/theme.scss')
+          }
+        }]
+      },
+      {
         test: /\.css$/i,
         use: [MiniCssExtractPlugin.loader, 'css-loader']
       },
