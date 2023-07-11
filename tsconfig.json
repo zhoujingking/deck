@@ -6,7 +6,7 @@
     "sourceMap": true,
     "moduleResolution": "NodeNext",
     "target": "ES6",
-    "outDir": "dist"
+    "outDir": "lib"
   },
   "include": ["src/**/*"]
 }
