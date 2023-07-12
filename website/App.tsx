@@ -1,7 +1,7 @@
 import React from 'react';
 import Table from './component/table';
 
-function App(props) {
+function App(): JSX.Element {
   return (
     <div>
       <div className="row" style={{

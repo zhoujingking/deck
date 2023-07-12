@@ -7,7 +7,7 @@ process.env.BABEL_ENV = 'development';
 module.exports = {
   mode: 'development',
   entry: {
-    index: path.resolve(__dirname + '/website', 'index.js'),
+    index: path.resolve(__dirname + '/website', 'index.tsx'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -43,8 +43,16 @@ module.exports = {
             ['babel-preset-react-app']
           ]
         }
+      },
+      {
+        test: /\.(ts|tsx)$/i,
+        use: ['ts-loader'],
+        exclude: /node_modules/
       }
     ]
+  },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.json']
   },
   plugins: [
     new HtmlWebpackPlugin({

@@ -1,31 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Rank, Suit } from '../../src/core/Card';
 
 const colorMap = {
-  SPADE: 'black',
-  HEART: 'red',
-  DIAMOND: 'red',
-  CLUB: 'black'
+  [Suit.Spade]: 'black',
+  [Suit.Heart]: 'red',
+  [Suit.Diamond]: 'red',
+  [Suit.Club]: 'black'
 };
 
-const getRankString = (rank) => {
-  if (rank === 11) {
+const getRankString = (rank: Rank) => {
+  if (rank === Rank.Jack) {
     return 'J';
   }
-  if (rank === 12) {
+  if (rank === Rank.Queen) {
     return 'Q';
   }
-  if (rank === 13) {
+  if (rank === Rank.King) {
     return 'K';
   }
-  if (rank === 14) {
+  if (rank === Rank.Ace) {
     return 'A';
   }
   return rank.toString();
 }
 
-function Card({suit, rank}) {
-  
+interface CardProps {
+  suit: Suit,
+  rank: Rank
+}
+
+function Card({suit, rank} : CardProps) {
   return (
     <div className="card">
       <div style={{color: colorMap[suit]}}>{suit}</div>

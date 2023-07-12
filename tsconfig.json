@@ -6,7 +6,10 @@
     "sourceMap": true,
     "moduleResolution": "NodeNext",
     "target": "ES6",
-    "outDir": "lib"
+    "outDir": "lib",
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true
   },
   "include": ["src/**/*"]
 }
