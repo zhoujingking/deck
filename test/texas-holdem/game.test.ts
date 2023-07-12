@@ -18,11 +18,21 @@ test('Texas holdem game mimic', () => {
   table.addPlayer(playerSawyer);
   table.addPlayer(playerDamon);
 
+  expect(table.players.length).toBe(3);
+
   const deck = new Deck();
   dealer.setDeck(deck);
   // dealer shuffles deck cards
   dealer.shuffle();
   // dealer deals cards
+
+  // preflop
+  dealer.deal();
+  // flop
+  dealer.deal();
+  // turn
+  dealer.deal();
+  // river
   dealer.deal();
 
   expect(playerJack.cards.length).toBe(2);
@@ -30,7 +40,7 @@ test('Texas holdem game mimic', () => {
   expect(playerDamon.cards.length).toBe(2);
 
   expect(table.flopCards.length).toBe(3);
-  expect(table.riverCard).not.toBeNull();
+  expect(table.turnCard).not.toBeNull();
   expect(table.riverCard).not.toBeNull();
 
   expect(deck.cards.length).toBe(38);

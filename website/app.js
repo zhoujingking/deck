@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Table from './component/table';
 
 function App(props) {
@@ -8,11 +7,10 @@ function App(props) {
       <div className="row" style={{
         justifyContent: 'center'
       }}>
-        <Table />
+        <Table numOfSeats={6}/>
       </div>
     </div>
   );
 }
-App.defaultProps={};
-App.propTypes={};
+
 export default App;

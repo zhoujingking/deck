@@ -1,13 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Player from '../../../lib/core/Player';
+import Card from '../Card';
 
 function Seat(props) {
-  const player = props.player;
+  const person = props.person;
   return (
     <div className="seat">
       {
-        player ? player.name : 'Empty'
+        person ? person.name : 'Empty'
+      }
+      {
+        person?.cards?.map((card, index) => {
+          return (
+            <Card key={index} suit={card.suit} rank={card.rank} />
+          )
+        })
       }
     </div>
   );
@@ -15,6 +22,6 @@ function Seat(props) {
 Seat.defaultProps={};
 Seat.propTypes={
   containerStyle: PropTypes.object,
-  player: PropTypes.objectOf(Player)
+  person: PropTypes.object
 };
 export default Seat;

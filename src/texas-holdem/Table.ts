@@ -5,7 +5,7 @@ import { Card } from '../core/Card';
 
 class Table implements ITable {
   private _seats: Array<Player | null>;
-  private _flopCards: Array<Card>;
+  private _flopCards: Array<Card> = [];
   _dealer: Dealer;
   turnCard: Card;
   riverCard: Card;
@@ -56,6 +56,10 @@ class Table implements ITable {
     return this._seats.filter(player => !!player);
   }
 
+  get seats(): Array<Player | null> {
+    return this._seats;
+  }
+
   get availableSeats(): Array<number> {
     const seats = [];
     this._seats.forEach((player, index) => {
@@ -75,6 +79,12 @@ class Table implements ITable {
       throw new Error('Flop must have three cards');
     }
     this._flopCards = value;
+  }
+
+  resetCommunityCards() {
+    this._flopCards = [];
+    this.turnCard = undefined;
+    this.riverCard = undefined;
   }
 }
 

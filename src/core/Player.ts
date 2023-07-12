@@ -21,6 +21,10 @@ class Player implements IPerson {
     this._cards.push(card);
   }
 
+  resetCards() {
+    this._cards = [];
+  }
+
   get cards(): Array<Card> {
     return this._cards;
   }
