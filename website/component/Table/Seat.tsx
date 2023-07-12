@@ -1,8 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Card from '../Card';
+import { Card as PlainCard } from '../../../src/core/Card';
 
-function Seat(props) {
+interface SeatProps {
+  person: {
+    name: string,
+    cards?: Array<PlainCard>
+  } | null
+}
+
+function Seat(props: SeatProps) {
   const person = props.person;
   return (
     <div className="seat">

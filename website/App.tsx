@@ -1,5 +1,5 @@
 import React from 'react';
-import Table from './component/table';
+import Table from './component/Table';
 
 function App(): JSX.Element {
   return (

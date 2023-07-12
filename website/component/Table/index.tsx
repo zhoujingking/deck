@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Seat from './Seat';
-import TexasTable from '../../../lib/texas-holdem/Table'
-import Player from '../../../lib/core/Player';
-import Dealer from '../../../lib/texas-holdem/Dealer';
+import TexasTable from '../../../src/texas-holdem/Table'
+import Player from '../../../src/core/Player';
+import Dealer from '../../../src/texas-holdem/Dealer';
 import { useState } from 'react';
-import Deck from '../../../lib/texas-holdem/Deck';
+import Deck from '../../../src/texas-holdem/Deck';
 import { v4 } from 'uuid';
 import Card from '../Card';
-import { getHoldemHand } from '../../../lib/texas-holdem/getHoldemHand';
-import Stage from '../../../lib/texas-holdem/Stage';
+import { getHoldemHand } from '../../../src/texas-holdem/getHoldemHand';
+import Stage from '../../../src/texas-holdem/Stage';
 
-const initTable = (numOfSeats) => {
+const initTable = (numOfSeats: number): TexasTable => {
   const table = new TexasTable(numOfSeats);
   const playerJack = new Player('Jack');
   const playerSawyer = new Player('Sawyer');
@@ -25,12 +25,14 @@ const initTable = (numOfSeats) => {
   return table;
 }
 
-function Table(props) {
-  const numOfSeats = props.numOfSeats;
-  const [uuid, setUuid] = useState(v4());
-  const [table, setTable] = useState(initTable(numOfSeats));
+interface TableProps {
+  numOfSeats: number
+}
 
-  console.log(table)
+function Table(props: TableProps) {
+  const numOfSeats = props.numOfSeats;
+  const [uuid, setUuid] = useState<string>(v4());
+  const [table, setTable] = useState<TexasTable>(initTable(numOfSeats));
 
   const onShuffle = () => {
     table.dealer.shuffle();
@@ -56,7 +58,7 @@ function Table(props) {
               <Seat person={player} />
               {
                 table.dealer.stage === Stage.DONE && player && (
-                  <div>{getHoldemHand([...player.cards, ...table._flopCards, table.turnCard, table.riverCard]).type}</div>
+                  <div>{getHoldemHand([...player.cards, ...table.flopCards, table.turnCard, table.riverCard]).type}</div>
                 )
               }
               
