@@ -8,6 +8,8 @@ import { useState } from 'react';
 import Deck from '../../../lib/texas-holdem/Deck';
 import { v4 } from 'uuid';
 import Card from '../Card';
+import { getHoldemHand } from '../../../lib/texas-holdem/getHoldemHand';
+import Stage from '../../../lib/texas-holdem/Stage';
 
 const initTable = (numOfSeats) => {
   const table = new TexasTable(numOfSeats);
@@ -52,6 +54,12 @@ function Table(props) {
           return (
             <div key={index} className={className}>
               <Seat person={player} />
+              {
+                table.dealer.stage === Stage.DONE && player && (
+                  <div>{getHoldemHand([...player.cards, ...table._flopCards, table.turnCard, table.riverCard]).type}</div>
+                )
+              }
+              
             </div>
           )
         })

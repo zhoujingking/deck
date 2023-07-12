@@ -70,7 +70,7 @@ export default class Dealer implements IDealer {
     // burn card
     const burnCard = this._deck.pop();
     this._table.riverCard = this._deck.pop();
-    this._stage = Stage.PREFLOP;
+    this._stage = Stage.DONE;
     return burnCard;
   }
 
